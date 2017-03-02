@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>uk.tldcode.extraterrestrialprobemachine</groupId>
+    <artifactId>extra-terrestrial-probe-machine-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>ExtraTerrestrialProbeMachine</module>
+        <module>Plugins/PointsPlugin</module>
+        <module>Plugins/HeistsPlugin</module>
+        <module>Plugins/HelloWorldPlugin</module>
+        <module>API</module>
+        <module>Plugins/javaplugintest</module>
+        <module>Plugins/ScalaTestPlugin</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <name>Extra-Terrestrial-Probe-Machine Parent</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin.version>1.1.0-rc-91</kotlin.version>
+        <scala.version>2.12.1</scala.version>
+        <junit.version>4.12</junit.version>
+    </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://maven.tldcode.uk:8081/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>release</id>
+            <url>http://maven.tldcode.uk:8081/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>Kotlin</id>
+            <url>https://dl.bintray.com/kotlin/kotlin-dev/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>kotlin</id>
+            <url>https://dl.bintray.com/kotlin/kotlin-dev/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jre7</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.pircbotx</groupId>
+            <artifactId>pircbotx</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+
+    </dependencies>
+
+
+</project>
