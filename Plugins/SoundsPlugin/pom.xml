@@ -5,36 +5,25 @@
         <artifactId>extra-terrestrial-probe-machine-parent</artifactId>
         <groupId>uk.tldcode.extraterrestrialprobemachine</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>extra-terrestrial-probe-machine-api</artifactId>
+    <artifactId>soundsplugin</artifactId>
     <packaging>jar</packaging>
 
-    <name>Extra-Terrestrial-Probe-Machine API</name>
-<dependencies>
-    <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>1.4.193</version>
-    </dependency>
-    <dependency>
-        <groupId>org.jgrapht</groupId>
-        <artifactId>jgrapht-core</artifactId>
-        <version>1.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy-all</artifactId>
-        <version>2.4.8</version>
-    </dependency>
-    <dependency>
-        <groupId>org.simpleframework</groupId>
-        <artifactId>simple-http</artifactId>
-        <version>6.0.1</version>
-    </dependency>
-</dependencies>
+    <name>uk.tldcode.extraterrestrialprobemachine soundsplugin</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>uk.tldcode.extraterrestrialprobemachine</groupId>
+            <artifactId>extra-terrestrial-probe-machine-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
@@ -58,6 +47,25 @@
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

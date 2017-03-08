@@ -5,6 +5,7 @@ import org.pircbotx.hooks.events.MessageEvent
 import org.slf4j.LoggerFactory
 import uk.tldcode.extraterrestrialprobemachine.api.UserLevel
 import uk.tldcode.extraterrestrialprobemachine.api.Command
+import uk.tldcode.extraterrestrialprobemachine.api.KotlinCommand
 import uk.tldcode.extraterrestrialprobemachine.api.Plugin
 import java.sql.DriverManager
 import java.sql.SQLException
@@ -22,7 +23,7 @@ class PointsPlugin(name:String) : Plugin(name) {
             getUsers().parallelStream().forEach { AddPoints(it, 5) }
         }, 5L, 5L, TimeUnit.MINUTES)
         Scheduler.scheduleAtFixedRate({ messages.parallelStream().forEach { AddPoints(it, 1) };messages.clear() }, 5L, 5L, TimeUnit.MINUTES)
-        Commands.put(PointsName, object : Command {
+        Commands.put(PointsName, object : KotlinCommand() {
             override fun invoke(event: MessageEvent, respond: (String) -> Unit) {
                 when (event.message.removePrefix("!${PointsName.pluralize()}").trim().split(" ").first()) {
                     "add" -> {

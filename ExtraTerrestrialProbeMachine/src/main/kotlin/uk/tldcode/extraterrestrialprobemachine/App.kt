@@ -12,11 +12,12 @@ import uk.tldcode.extraterrestrialprobemachine.api.PluginRegistry
 import java.io.File
 import java.net.URLClassLoader
 import javax.net.ssl.SSLSocketFactory
-import java.util.zip.ZipEntry
-import java.io.FileInputStream
-import java.util.zip.ZipInputStream
-import java.util.ArrayList
 import java.util.zip.ZipFile
+import java.net.InetSocketAddress
+import org.simpleframework.transport.connect.SocketConnection
+import org.simpleframework.http.core.ContainerSocketProcessor
+import org.simpleframework.http.socket.service.ProtocolRouter
+import org.simpleframework.http.socket.service.RouterContainer
 
 
 fun main(args: Array<String>) {
@@ -51,8 +52,16 @@ fun main(args: Array<String>) {
     //Create our bot with the configuration
     loadPlugins()
     PluginRegistry.PluginPreInit(configuration)
+
+
     val bot = PircBotX(configuration.buildConfiguration())
     PluginRegistry.PluginInit(bot)
+    val container = HttpServer()
+    val wsContainer = RouterContainer(container,ProtocolRouter(PluginRegistry.Plugins().mapValues {it.value.WebSocket  }.toMap(),null),10)
+    val server = ContainerSocketProcessor(wsContainer)
+    val connection = SocketConnection(server)
+    val address = InetSocketAddress(8080)
+    connection.connect(address)
     bot.startBot()
     PluginRegistry.PluginPostInit()
 

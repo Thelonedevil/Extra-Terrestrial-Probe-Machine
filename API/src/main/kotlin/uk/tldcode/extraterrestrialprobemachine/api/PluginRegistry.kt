@@ -1,14 +1,20 @@
 package uk.tldcode.extraterrestrialprobemachine.api
 
 import com.google.common.collect.ImmutableMap
+import groovy.lang.Closure
+import org.codehaus.groovy.runtime.MethodClosure
 import org.pircbotx.Configuration
 import org.pircbotx.PircBotX
 import org.pircbotx.hooks.ListenerAdapter
 import org.pircbotx.hooks.events.MessageEvent
+import org.simpleframework.http.Request
+import org.simpleframework.http.Response
+import org.simpleframework.http.socket.service.Service
 import org.slf4j.LoggerFactory
 import uk.tldcode.extraterrestrialprobemachine.api.dependencies.Dependency
 import java.io.File
 import java.util.concurrent.Executors
+import java.util.function.Consumer
 
 
 object PluginRegistry {
@@ -59,12 +65,15 @@ object PluginRegistry {
 abstract class Plugin(val name: String) : ListenerAdapter() {
     val Dependencies: LinkedHashSet<String> = LinkedHashSet()
     val Commands: HashMap<String, Command> = HashMap()
+    var WebSocket : Service? = null
     var bot: PircBotX? = null
     val Logger = LoggerFactory.getLogger(this::class.java)
     fun getUsers(): List<String> {
         return bot!!.userChannelDao.getUsers(bot!!.userChannelDao.getChannel("#the_lone_devil")).map { it.nick }
     }
+    open fun Web(request: Request, response: Response){
 
+    }
     abstract fun Init()
     abstract fun PostInit()
     var Scheduler = Executors.newScheduledThreadPool(10)!!
@@ -99,6 +108,13 @@ abstract class KotlinCommand : Command {
 
     abstract operator fun invoke(event: MessageEvent, respond: (String) -> Unit)
 }
+abstract class JavaCommand : Command {
+    override operator fun invoke(event: MessageEvent) {
+        this(event, Consumer<String> { t -> event.respondChannel(t) })
+    }
+
+    abstract operator fun invoke(event: MessageEvent, respond: Consumer<String>)
+}
 
 abstract class ScalaCommand : Command {
     override operator fun invoke(event: MessageEvent) {
@@ -110,4 +126,15 @@ abstract class ScalaCommand : Command {
     }
 
     abstract operator fun invoke(event: MessageEvent, respond: scala.Function1<String, Unit>)
+}
+abstract class GroovyCommand:Command{
+    override operator fun invoke(event: MessageEvent) {
+        this(event,object:Closure<Unit>(null){
+            override fun call(args: Any): Unit {
+                return event.respondChannel(args.toString())
+            }
+        })
+    }
+
+    abstract operator fun invoke(event: MessageEvent, respond: Closure<Unit>)
 }

@@ -1,6 +1,8 @@
 package uk.tldcode.extraterrestrialprobemachine.plugins
 
 import org.pircbotx.hooks.events.MessageEvent
+import org.simpleframework.http.Request
+import org.simpleframework.http.Response
 import uk.tldcode.extraterrestrialprobemachine.api.UserLevel
 import uk.tldcode.extraterrestrialprobemachine.api.Command
 import uk.tldcode.extraterrestrialprobemachine.api.KotlinCommand
@@ -12,9 +14,11 @@ class HelloWorldPlugin(name:String) : Plugin(name) {
     override fun PostInit() {
 
     }
+    override fun Web(request: Request,response: Response){
 
+    }
     override fun Init() {
-        Commands.put("HelloWorld", object: KotlinCommand {
+        Commands.put("HelloWorld", object: KotlinCommand() {
             override fun invoke(event:MessageEvent,respond: (String) -> Unit) {
                 respond("Hello, World!")
             }

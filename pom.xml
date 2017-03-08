@@ -15,6 +15,7 @@
         <module>API</module>
         <module>Plugins/javaplugintest</module>
         <module>Plugins/ScalaTestPlugin</module>
+        <module>Plugins/SoundsPlugin</module>
     </modules>
     <packaging>pom</packaging>
 

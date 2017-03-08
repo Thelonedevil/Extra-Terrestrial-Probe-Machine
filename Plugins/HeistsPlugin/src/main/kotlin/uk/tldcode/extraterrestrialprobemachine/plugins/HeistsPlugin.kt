@@ -12,7 +12,7 @@ class HeistsPlugin(name:String) : Plugin(name) {
     override fun Init() {
         Points = PluginRegistry.Plugins()["Points"]
         val HeistsName = readConfigValue("name","heist")
-        Commands.put(HeistsName,object: KotlinCommand {
+        Commands.put(HeistsName,object: KotlinCommand() {
             override fun invoke(event: MessageEvent, respond: (String) -> Unit) {
 
             }

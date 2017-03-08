@@ -4,9 +4,10 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NotNull;
 import org.pircbotx.hooks.events.MessageEvent;
-import uk.tldcode.extraterrestrialprobemachine.api.Command;
-import uk.tldcode.extraterrestrialprobemachine.api.Plugin;
-import uk.tldcode.extraterrestrialprobemachine.api.UserLevel;
+import uk.tldcode.extraterrestrialprobemachine.api.*;
+
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
 public class JavaTestPlugin extends Plugin {
     public JavaTestPlugin(@NotNull String name) {
@@ -14,14 +15,13 @@ public class JavaTestPlugin extends Plugin {
     }
 
     public void Init() {
-        getCommands().put("!JAVA", new Command() {
+        getCommands().put("!JAVA", new JavaCommand() {
 
-            public void invoke(@NotNull MessageEvent event, @NotNull Function1<? super String, Unit> respond) {
-                respond.invoke("JAVA!");
+            public void invoke(@NotNull MessageEvent event, @NotNull Consumer<String> respond) {
+                respond.accept("JAVA!");
             }
 
             @NotNull
-
             public UserLevel UserLevel(@NotNull MessageEvent event) {
                 return UserLevel.Caster;
             }

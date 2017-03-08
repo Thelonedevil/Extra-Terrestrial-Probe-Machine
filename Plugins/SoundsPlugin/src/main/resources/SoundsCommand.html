@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="application/javascript">
+    var exampleSocket = new WebSocket("ws://localhost:8080/the_lone_devil","Sounds");
+    exampleSocket.onopen = function (event) {
+      exampleSocket.send("Connection opened")
+    };
+    exampleSocket.onmessage = function (event) {
+        var audio = new Audio(event.data);
+        audio.play();
+    }
+</script>
+</body>
+</html>
